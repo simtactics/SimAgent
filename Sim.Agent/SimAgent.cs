@@ -3,7 +3,7 @@ namespace Sim.Agent;
 public class SimAgent
 {
     private readonly Dictionary<NeedType, SimNeed> _needs = new();
-    public EmotionType CurEmotion { get; set; } = EmotionType.Neutral;
+    private EmotionType CurEmotion { get; set; } = EmotionType.Neutral;
     
     /// <summary>
     /// Initialize basic sample needs for testing.
@@ -28,9 +28,9 @@ public class SimAgent
     }
     
     /// <summary>
-    /// Determine emotion from needs using ternary logic
+    /// Returns a state describing the Sim's emotions based on their satisfactory levels.
     /// </summary>
-    TriLogic ComputeHappiness()
+    private TriLogic ComputeHappiness()
     {
         var satisfied = 0;
         var unsatisfied = 0;
@@ -45,6 +45,10 @@ public class SimAgent
                 case TriLogic.False:
                     unsatisfied++;
                     break;
+                // This is why I love this logic pattern
+                case TriLogic.Unknown:
+                default:
+                    continue;
             }
         }
 
@@ -52,7 +56,10 @@ public class SimAgent
         return satisfied > unsatisfied ? TriLogic.False : TriLogic.Unknown;
     }
 
-    void EvaluateEmotions()
+    /// <summary>
+    /// Evaluates which emotion a Sim should be feeling based on their needs.
+    /// </summary>
+    private void EvaluateEmotions()
     {
         var isHappy = ComputeHappiness();
         var energy = _needs[NeedType.Energy];
@@ -60,15 +67,26 @@ public class SimAgent
         var fun =  _needs[NeedType.Fun];
         
         if (energy.Value < 25) CurEmotion = EmotionType.Tired;
-        else if (isHappy == TriLogic.True && fun.IsSatisfied() == TriLogic.True) CurEmotion = EmotionType.Playful;
-        else if (isHappy == TriLogic.True) CurEmotion = EmotionType.Happy;
-        else if (social.IsSatisfied() ==   TriLogic.False) CurEmotion = EmotionType.Lonely;
-        else if (isHappy == TriLogic.False) CurEmotion = EmotionType.Sad;
-        else CurEmotion = EmotionType.Neutral;
+        else switch (isHappy)
+        {
+            case TriLogic.True when fun.IsSatisfied() == TriLogic.True:
+                CurEmotion = EmotionType.Playful;
+                break;
+            case TriLogic.True:
+                CurEmotion = EmotionType.Happy;
+                break;
+            default:
+            {
+                if (social.IsSatisfied() == TriLogic.False) CurEmotion = EmotionType.Lonely;
+                else if (isHappy == TriLogic.False) CurEmotion = EmotionType.Sad;
+                else CurEmotion = EmotionType.Neutral;
+                break;
+            }
+        }
     }
     
     /// <summary>
-    /// Print status to console for testing
+    /// Print a snapshot of the current the needs and emotion for debugging.
     /// </summary>
     public void PrintStatus()
     {
