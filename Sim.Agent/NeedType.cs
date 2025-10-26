@@ -1,11 +1,11 @@
 namespace Sim.Agent;
 
-public enum Needs
+public enum NeedType
 {
     Hunger,
-    Bladder,
     Energy,
+    Fun,
     Social,
     Hygiene,
-    Fun
+    Bladder
 }

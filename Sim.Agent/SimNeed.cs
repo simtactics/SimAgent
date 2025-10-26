@@ -1,46 +1,22 @@
-﻿namespace Sim.Agent;
+namespace Sim.Agent;
 
-public class SimNeed
+public class SimNeed(NeedType type, float value)
 {
-    public Needs Need;
-    public float Value;
-    public TernaryState State;
+    public NeedType Type { get; } = type;
+    public float Value { get; private set; } = Math.Clamp(value, 0f, 100f);
 
-    /// <summary>
-    /// Initializes a Sim's need and current state.
-    /// </summary>
-    /// <param name="need">Name of the need</param>
-    /// <param name="value">Value from 0 to 100</param>
-    public SimNeed(Needs need, float value)
+    public void Update(float delta)
     {
-        Need = need;
-        Value = value;
-        State = DetermineState();
+        Value = Math.Clamp(Value + delta, 0f, 100f);
     }
-    
-    /// <summary>
-    /// Determines the ternary state from numeric values and
-    /// influences the emotional state.
-    /// </summary>
-    /// <returns></returns>
-    TernaryState DetermineState()
+
+    public TriLogic IsSatisfied()
     {
         return Value switch
         {
-            <20 => TernaryState.False,
-            >60 => TernaryState.True,
-            _ => TernaryState.Unknown
+            > 70f => TriLogic.True,
+            < 70f => TriLogic.False,
+            _ => TriLogic.Unknown
         };
     }
-
-    /// <summary>
-    /// Updates and recalculates the state
-    /// </summary>
-    /// <param name="dt">Delta value</param>
-    public void Update(float dt)
-    {
-        Value += dt;
-        State = DetermineState();
-    }
-
 }

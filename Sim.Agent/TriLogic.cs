@@ -1,6 +1,6 @@
 namespace Sim.Agent;
 
-public enum TernaryState {
+public enum TriLogic {
     False = -1,
     Unknown = 0,
     True = 1,
