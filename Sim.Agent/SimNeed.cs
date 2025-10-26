@@ -27,7 +27,7 @@ public class SimNeed(NeedType type, float value)
         {
             > 70f => TriLogic.True,
             < 70f => TriLogic.False,
-            _ => TriLogic.Unknown
+            _ => TriLogic.Unknown // No null!
         };
     }
 }

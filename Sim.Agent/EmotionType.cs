@@ -9,5 +9,5 @@ public enum EmotionType
     Tired,
     Playful,
     Lonely,
-    Embressed
+    Embarrassed
 }

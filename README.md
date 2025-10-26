@@ -1,12 +1,14 @@
 # Sim Agent
 
-Sim Agent uses a ternary-based state machine that determines the mood at any given moment. I'm assuming this is how it always operates because there is always a "Neutral" state in which they're neither happy or sad.
+Sim Agent uses a ternary-based logic pattern to determine a sim's mood and their emotional state. The Unknown value (similar to Rust's None) replaces "null" and allows for safe fallback to a Neutral state. 
 
 ## Background
 
-I've been making hypothetical proof of concepts of how The Sims possibly works without SimAnatics in ChatGPT. It started with just the basic needs engine until I came to the conclusion that alone doesn't solve how each sim, or agent, could operate when their needs full. But what's the fallback? Turns out a simple ternary logic switch was enough to balance it. After testing it out on a playground, I rewrote that original proof of concept into this.
+Using ChatGPT, I've toyed with hypothetical proof of concepts of how The Sims possibly works without SimAnatics. It started with just the basic needs engine until I started running into some problems.
 
-Still needs a little tweaking. Like even if hunger is really low while the rest are high, the sim's emotional state state remains Neutrual. So the average needs to be calculated. That being said, I am impressed with how this came out.
+But one problem I kept running into is this Idle state between their red or green states. And if they're red, Sims broadcast said need to any nearby object. How do I solve that? Then I stumbled upon a video about ternary logic patterns. I could use "Unknown" as that idle state and combine that with Sims 4's emotions.
+
+So I fired up prompted for proof of concepts and rewrote myself. Kind of like you see the code on a tutorial and write itself. Granted, I did make sure to test ChatGPT's results in a sandbox.
 
 ## License
 
