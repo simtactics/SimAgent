@@ -10,10 +10,5 @@
     "social": 0
   },
   "script": "script.lua",
-  "sprites": {
-    "east": "efile.png",
-    "north": "nfile.png",
-    "south": "sfile.png",
-    "west": "wfile.png"
-  }
+  "mesh":  "mesh.glb"
 }
