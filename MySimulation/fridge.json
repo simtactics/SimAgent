@@ -1,0 +1,19 @@
+{
+  "inheritance": "fridge",
+  "name": "fancy fridge",
+  "needs": {
+    "bladder": 0,
+    "energy": 0,
+    "fun": 0,
+    "hunger": 50,
+    "hygiene": 0,
+    "social": 0
+  },
+  "script": "script.lua",
+  "sprites": {
+    "east": "efile.png",
+    "north": "nfile.png",
+    "south": "sfile.png",
+    "west": "wfile.png"
+  }
+}

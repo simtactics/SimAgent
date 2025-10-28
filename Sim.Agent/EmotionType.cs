@@ -8,6 +8,7 @@ public enum EmotionType
     Angry,
     Tired,
     Playful,
+    Stressed,
     Lonely,
     Embarrassed
 }

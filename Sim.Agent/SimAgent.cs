@@ -77,9 +77,7 @@ public class SimAgent
                 break;
             default:
             {
-                if (social.IsSatisfied() == TriLogic.False) CurEmotion = EmotionType.Lonely;
-                else if (isHappy == TriLogic.False) CurEmotion = EmotionType.Sad;
-                else CurEmotion = EmotionType.Neutral;
+                CurEmotion = social.IsSatisfied() == TriLogic.False ? EmotionType.Lonely : EmotionType.Neutral;
                 break;
             }
         }
